@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 
 from src.config import settings
@@ -18,8 +19,15 @@ class PolicyRule:
     last_checked: str
 
 
-def load_policy_rules(policy_dir: Path | None = None) -> list[PolicyRule]:
-    policy_dir = policy_dir or settings.policy_dir
+@lru_cache(maxsize=8)
+def _load_policy_rules_cached(policy_dir_str: str) -> tuple[PolicyRule, ...]:
+    """Parse the markdown policy corpus once per directory.
+
+    Policy files are static at runtime, so the file I/O is cached keyed by directory.
+    `score_case` retrieves rules for every case; without this cache a single mart build
+    re-reads the whole corpus tens of thousands of times.
+    """
+    policy_dir = Path(policy_dir_str)
     rules: list[PolicyRule] = []
     for path in sorted(policy_dir.glob("*.md")):
         text = path.read_text(encoding="utf-8")
@@ -34,7 +42,13 @@ def load_policy_rules(policy_dir: Path | None = None) -> list[PolicyRule]:
             source_url=meta.get("source_url", ""),
             last_checked=meta.get("last_checked", "unknown"),
         ))
-    return rules
+    return tuple(rules)
+
+
+def load_policy_rules(policy_dir: Path | None = None) -> list[PolicyRule]:
+    policy_dir = policy_dir or settings.policy_dir
+    # A fresh list is returned each call so callers can never mutate the cached corpus.
+    return list(_load_policy_rules_cached(str(policy_dir)))
 
 
 def retrieve_policy_rules(category: str, limit: int = 3) -> list[PolicyRule]:

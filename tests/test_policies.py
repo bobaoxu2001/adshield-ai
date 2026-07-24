@@ -49,3 +49,18 @@ def test_unknown_category_falls_back_to_deceptive_rules() -> None:
     rules = retrieve_policy_rules("Nonexistent Category")
     assert rules
     assert all(rule.category == "Deceptive / Misleading Claims" for rule in rules)
+
+
+def test_policy_corpus_file_io_is_cached() -> None:
+    """Parsing the markdown corpus is cached so per-case scoring does not re-read disk."""
+    from src.risk.policy_retriever import _load_policy_rules_cached, load_policy_rules
+    _load_policy_rules_cached.cache_clear()
+    first = load_policy_rules()
+    hits_before = _load_policy_rules_cached.cache_info().hits
+    second = load_policy_rules()
+    info = _load_policy_rules_cached.cache_info()
+    assert info.hits > hits_before, "second load should hit the cache instead of re-reading files"
+    assert [r.rule_id for r in first] == [r.rule_id for r in second]
+    # Callers receive independent lists; mutating one must not corrupt the cached corpus.
+    first.clear()
+    assert len(load_policy_rules()) == len(second)

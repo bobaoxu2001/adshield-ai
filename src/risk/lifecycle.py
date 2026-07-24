@@ -16,8 +16,14 @@ DATA_SCOPE_REAL = "real_public"
 ASSUMPTION_LABEL = "Illustrative scenario assumptions, not observed business values."
 
 
+# The demo taxonomy, signals, and strategy versions are a frozen configuration snapshot,
+# so their created/effective timestamps are a fixed constant rather than wall-clock time.
+# This keeps the seeded governance records deterministic across rebuilds and test runs.
+_FROZEN_CONFIG_TS = "2026-07-15T00:00:00+00:00"
+
+
 def _now() -> str:
-    return "2026-07-15T00:00:00+00:00"
+    return _FROZEN_CONFIG_TS
 
 
 RISK_TAXONOMY = [

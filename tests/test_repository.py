@@ -73,3 +73,17 @@ def test_cfpb_feedback_rejects_enforcement_decisions_server_side(tmp_path, monke
     saved = repository.save_feedback("cfpb-late-900", "relevant prior", reviewer_id="reviewer-1")
     assert saved["reviewer_decision"] == "relevant prior"
     assert saved["reviewer_id"] == "reviewer-1"
+
+
+def test_case_detail_fetches_single_case_with_trace() -> None:
+    """case_detail resolves one case directly (no full-table scan) and attaches its trace."""
+    from src.app import repository
+    sample = repository.cases(limit=1)
+    assert sample, "expected at least one scored case in the mart"
+    case_id = sample[0]["case_id"]
+    detail = repository.case_detail(case_id)
+    assert detail is not None
+    assert detail["case_id"] == case_id
+    assert detail["decision_trace"]["steps"]
+    assert "candidate" in detail["shadow_evaluation"]
+    assert repository.case_detail("does-not-exist") is None

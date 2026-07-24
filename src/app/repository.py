@@ -147,11 +147,21 @@ def case_count(search: str = "", category: str = "", severity: str = "", languag
         return int(db.execute(sql, _case_filter_params(search, category, severity, language, source, action)).fetchone()[0])
 
 
+_SINGLE_CASE_SQL = _CASE_TEXTS + """
+    SELECT s.case_id, s.source, s.case_date, s.language, s.risk_score, s.risk_category,
+           s.severity, s.recommended_action, s.needs_human_review, s.decision_scope, s.confidence, c.case_text, c.product,
+           c.issue, c.state, c.source_url
+    FROM ad_risk_scores s JOIN case_texts c USING (case_id)
+    WHERE s.case_id = ?
+"""
+
+
 def case_detail(case_id: str) -> dict[str, object] | None:
-    matching = cases(search="", limit=10000)
-    base = next((row for row in matching if row["case_id"] == case_id), None)
-    if not base:
+    with _connect() as db:
+        base_rows = _records(db, _SINGLE_CASE_SQL, [case_id])
+    if not base_rows:
         return None
+    base = base_rows[0]
     with _connect() as db:
         score = _records(db, "SELECT * FROM ad_risk_scores WHERE case_id = ?", [case_id])[0]
         rule_ids = json.loads(score.get("matched_policy_rule_ids_json") or "[]")
