@@ -29,10 +29,17 @@ agreement:
 
 | Strategy | Category | Routing | Exception routing | Development-set decision |
 |---|---:|---:|---:|---|
-| Frozen authoritative v1 | 60% | 66.7% | 30% | HOLD |
+| Frozen authoritative v1 | 50% | 66.7% | 30% | HOLD |
 | Shadow candidate v2.1 (tuned on this set) | 93.3% | 100% | 100% | Regression clean; eligible for controlled human review |
 
 Candidate v2.1 adds explicit category precedence, structured benchmark-only advertiser context, bounded bilingual canonicalization, and guarded exception routing. Five scenarios still have a category or evidence disagreement, and remain visible for inspection.
+
+> **Note on the v1 category baseline.** It is 50%, not the 60% reported in earlier revisions. The
+> fallback for text the engine cannot categorize was changed from a specific "Advertiser Integrity
+> Risk" label to an honest "Uncategorized / Needs Review" bucket. That removed six coincidental
+> matches where v1 scored the advertiser-behavior scenarios correctly only because its no-signal
+> default happened to equal the expected label. v1 genuinely cannot detect those cases (it does not
+> process structured advertiser evidence), so 50% is the honest baseline.
 
 Passing this curated gate does not authorize production. The separate Launch Readiness gate still requires authorized ad records, independently labeled enforcement outcomes, reviewer identity coverage, label agreement, observed SLA compliance, policy-owner approval, and release-manager execution.
 
@@ -49,7 +56,7 @@ expected to miss — novel synonyms (`不查征信` instead of `无视征信`), 
 
 | Set | v1 category | v1 routing | v2.1 category | v2.1 routing |
 |---|---:|---:|---:|---:|
-| Development (60, tuned) | 60.0% | 66.7% | 93.3% | 100% |
+| Development (60, tuned) | 50.0% | 66.7% | 93.3% | 100% |
 | Held-out (18, unseen) | 27.8% | 55.6% | 50.0% | 72.2% |
 
 Two honest conclusions:

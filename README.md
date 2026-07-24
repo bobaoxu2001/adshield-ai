@@ -7,7 +7,7 @@
 **A ninety-second system walkthrough:**
 
 1. **Review Queue → open the top case.** A 16-step decision trace shows the exact matched evidence, score components, policy references, and strategy version — plus why this record can only be routed for analyst research and can never trigger an automated ad enforcement action.
-2. **Benchmark Lab.** The enforced v1 strategy scores 60% category / 66.7% routing / 30% exception routing against 60 curated bilingual scenarios; a shadow candidate remediated against those same scenarios reaches 93.3% / 100% / 100%. This is development-set regression coverage, not evidence of generalization to unseen ads.
+2. **Benchmark Lab.** The enforced v1 strategy scores 50% category / 66.7% routing / 30% exception routing against 60 curated bilingual scenarios; a shadow candidate remediated against those same scenarios reaches 93.3% / 100% / 100%. This is development-set regression coverage, not evidence of generalization to unseen ads.
 3. **Launch Readiness.** Despite that clean regression run, promotion is **HOLD**: no authorized ad records, no independent labels, no verified reviewer identity, no SLA history, no policy-owner approval. Passing an offline benchmark is not authority to enforce.
 
 **Why this problem matters:** ads risk teams are judged on decisions they must defend — to advertisers, regulators, and their own reviewers. The hard part is rarely the classifier; it is keeping decision authority, evidence, and iteration safety intact while operating at volume under incomplete information. This project is about that layer.
@@ -146,7 +146,7 @@ Core tables include:
 
 The repository contains 60 isolated curated scenarios: 15 English, 15 Mandarin, 10 evasion/mixed-language, 10 positive-exception, and 10 advertiser-behavior cases. Reported benchmark values are agreement or coverage against those curated labels—not production quality metrics. Threshold sensitivity is calculated across the same isolated scope.
 
-The frozen v1 benchmark remains 60% category, 66.7% routing, and 30% exception routing. Shadow v2.1, evaluated against the same labels, reaches 93.3%, 100%, and 100%.
+The frozen v1 benchmark is 50% category, 66.7% routing, and 30% exception routing. Shadow v2.1, evaluated against the same labels, reaches 93.3%, 100%, and 100%.
 
 **These 60 scenarios are a development set, not a test set.** Candidate v2.1's category-precedence and routing rules were written while remediating these specific failures, so its agreement is *regression coverage over known defects* — not evidence that it generalizes to unseen ads. To measure that gap honestly, an 18-scenario **held-out set** authored *after* v2.1 was frozen (Benchmark Lab → Held-out generalization, `/api/holdout-benchmark`) shows v2.1 dropping from 93.3% / 100% to **50.0% / 72.2%** category / routing — still ahead of v1 (27.8% / 55.6%), but far below the tuned score. Launch Readiness correctly remains **HOLD** because the external labels are not authorized platform enforcement truth and organization-verified identity, reviewer SLA history, and policy approval are still absent.
 

@@ -23,7 +23,12 @@ CATEGORIES = (
     RiskCategory("Landing Page Mismatch", "落地页不一致", ("landing mismatch", "different offer", "redirect", "跳转", "货不对板")),
     RiskCategory("Off-Platform Diversion", "站外导流", ("whatsapp", "telegram", "wechat", "dm me", "加微", "私域", "引流", "站外")),
     RiskCategory("Mandarin Market Evasion Terms", "中文市场规避词", ("谐音规避", "拼音规避", "私域", "引流", "加微", "羊毛")),
+    # Fail-safe bucket: never matched by keywords, only assigned as a fallback when nothing
+    # else applies. It makes no specific harm accusation and always routes to human review.
+    RiskCategory("Uncategorized / Needs Review", "未分类 / 待人工复核", ()),
 )
+
+UNCATEGORIZED = "Uncategorized / Needs Review"
 
 CATEGORY_NAMES = tuple(category.name for category in CATEGORIES)
 MANDARIN_TERMS = {
@@ -56,4 +61,6 @@ def category_for_product(product: str) -> str:
     value = product.lower()
     if any(term in value for term in ("loan", "credit", "debt", "mortgage", "money", "bank")):
         return "Financial Scam / High-Risk Financial Services"
-    return "Advertiser Integrity Risk"
+    # No signal and no product prior: do not invent a specific harm category. Mark it
+    # uncategorized so the fail-safe routing sends it to a human instead of guessing.
+    return UNCATEGORIZED

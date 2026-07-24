@@ -10,7 +10,7 @@ from src.risk.evidence_extractor import (
     landing_page_mismatch,
 )
 from src.risk.policy_retriever import retrieve_policy_rules
-from src.risk.taxonomy import CATEGORIES, category_for_product
+from src.risk.taxonomy import CATEGORIES, UNCATEGORIZED, category_for_product
 
 
 @dataclass(frozen=True)
@@ -140,6 +140,13 @@ def score_case(
             "Uses a non-enforcement source as vocabulary and prior evidence for analyst research; "
             "it is not an ad decision or proof of a policy violation."
         )
+    elif category == UNCATEGORIZED:
+        # Fail-safe: an ad the engine could not categorize is never auto-approved. It goes
+        # to a human, who has the context the keyword matcher lacks.
+        needs_human_review = True
+        action = "escalate to human review"
+        decision_scope = "ad_triage"
+        impact_note = "No matching signal or product prior; routed to human review rather than assigned a specific harm category."
     else:
         needs_human_review = 0.4 <= score < 0.85 or confidence < 0.68
         action = "hard reject" if score >= 0.85 and confidence >= 0.75 else "soft reject" if score >= 0.7 else "escalate to human review" if needs_human_review else "approve"

@@ -104,3 +104,26 @@ def test_duplicate_semantic_terms_do_not_inflate_score_twice() -> None:
     decision = score_case("dedupe", "loan", "loan", "meta")
     assert len([item for item in decision.evidence if item["term"] == "loan"]) == 2
     assert decision.risk_score == 0.315  # base + Meta prior + one semantic evidence term
+
+
+def test_uncategorized_is_a_failsafe_never_auto_approved() -> None:
+    """An ad the engine cannot categorize is labelled Uncategorized and sent to a human,
+    never auto-approved — for both the authoritative engine and the candidate."""
+    from src.risk.lifecycle import CANDIDATE_STRATEGY, evaluate_text
+
+    decision = score_case("m1", "Beautiful handcrafted wooden chairs for your patio", "furniture", "meta")
+    assert decision.risk_category == "Uncategorized / Needs Review"
+    assert decision.needs_human_review is True
+    assert decision.recommended_action == "escalate to human review"
+
+    candidate = evaluate_text("m1", "Beautiful handcrafted wooden chairs for your patio", product="furniture", source="Meta", strategy=CANDIDATE_STRATEGY)
+    assert candidate["category"] == "Uncategorized / Needs Review"
+    assert candidate["recommended_action"] == "escalate"
+    assert candidate["needs_human_review"] is True
+
+
+def test_no_signal_complaint_keeps_finance_prior_not_uncategorized() -> None:
+    """A CFPB financial-product complaint keeps its product prior rather than falling to Uncategorized."""
+    decision = score_case("c1", "Some unrelated complaint text with no matching signals", "Credit card", "cfpb")
+    assert decision.risk_category == "Financial Scam / High-Risk Financial Services"
+    assert decision.decision_scope == "risk_prior"

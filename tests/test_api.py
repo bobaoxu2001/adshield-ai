@@ -71,7 +71,7 @@ def test_emerging_risk_discovery_contract_is_complete() -> None:
 def test_launch_readiness_separates_benchmark_pass_from_production_hold() -> None:
     benchmark = client.get("/api/benchmark-lab").json()
     readiness = client.get("/api/launch-readiness").json()
-    assert benchmark["baseline"]["category_agreement"] == 0.6
+    assert benchmark["baseline"]["category_agreement"] == 0.5  # frozen v1 honest baseline
     assert benchmark["promotion_gate"]["status"] == "eligible_for_review"
     assert readiness["benchmark_gate"]["status"] == "eligible_for_review"
     assert readiness["status"] == "hold"

@@ -14,6 +14,15 @@
 | Landing Page Mismatch | 落地页不一致 | redirect, different offer, 货不对板 |
 | Off-Platform Diversion | 站外导流 | WhatsApp, Telegram, 加微, 私域, 引流 |
 | Mandarin Market Evasion Terms | 中文市场规避词 | 私域, 引流, 加微, 羊毛, 谐音规避, 拼音规避 |
+| Uncategorized / Needs Review | 未分类 / 待人工复核 | *(fail-safe fallback; never keyword-matched)* |
+
+## Fail-safe fallback
+
+When an ad matches no signal and carries no product prior, the engine does not invent a specific harm
+category. It assigns **Uncategorized / Needs Review** and routes the case to a human — both the
+authoritative v1 engine and the candidate escalate rather than auto-approving something they could not
+understand. This is a deliberate safety property: an unrecognized ad is a reason to ask a person, not
+to guess a label or wave it through.
 
 ## Mandarin matching boundary
 

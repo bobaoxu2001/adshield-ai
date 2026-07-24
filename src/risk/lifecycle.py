@@ -179,6 +179,9 @@ def _route_candidate_policy(
         return "allow", False
     if "advertiser_behavior_signal" in types:
         return "escalate", True
+    if category == "Uncategorized / Needs Review":
+        # Fail-safe: candidate routing also escalates rather than allowing an ad it could not categorize.
+        return "escalate", True
     if category == "Dangerous Products or Services":
         return "hard reject", False
     if category == "Advertiser Integrity Risk" and "document falsification" in terms:
@@ -253,7 +256,7 @@ def decision_trace(case: dict[str, object], strategy: StrategyVersion = CURRENT_
     text = str(case.get("case_text") or case.get("ad_text") or "")
     source = str(case.get("source") or "CFPB")
     baseline_score = float(case.get("risk_score") or 0)
-    category = str(case.get("risk_category") or "Advertiser Integrity Risk")
+    category = str(case.get("risk_category") or "Uncategorized / Needs Review")
     raw_exceptions = matched_exceptions(text, category, str(case.get("product") or ""))
     exceptions = raw_exceptions if not strategy.authoritative else [{**item, "potential_reduction": item["applied_reduction"], "applied_reduction": 0.0, "application_status": "not active in deterministic_rules_v1"} for item in raw_exceptions]
     reduction = sum(float(item["applied_reduction"]) for item in exceptions) * strategy.exception_multiplier
@@ -352,7 +355,7 @@ def benchmark_cases() -> list[dict[str, object]]:
         ("Regulatory guidance on credit repair advertising", "Financial Scam / High-Risk Financial Services", "EXC-LEGAL"),
         ("科普：如何识别稳赚骗局", "Deceptive / Misleading Claims", "EXC-EDUCATION"),
         ("法律讨论：非法药品广告的责任", "Dangerous Products or Services", "EXC-LEGAL"),
-        ("The classical art assistant course", "Advertiser Integrity Risk", "EXC-WORD-BOUNDARY"),
+        ("The classical art assistant course", "Uncategorized / Needs Review", "EXC-WORD-BOUNDARY"),
         ("报道引用七天瘦虚假宣传案例", "Health / Weight Loss / Pharmaceuticals Risk", "EXC-QUOTE"),
         ("Deposit insurance education: principal protection limits", "Financial Scam / High-Risk Financial Services", "EXC-FDIC"),
     ]
