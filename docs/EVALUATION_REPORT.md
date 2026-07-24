@@ -1,6 +1,6 @@
 # Evaluation Report
 
-Generated: 2026-07-16T01:08:14.123933+00:00
+Generated: 2026-07-24T12:27:08.324387+00:00
 
 This report is calculated from the current local DuckDB mart. It never substitutes fabricated labels. Precision, recall, and F1 remain unavailable until human review feedback exists.
 

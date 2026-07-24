@@ -158,19 +158,21 @@ See [Benchmark Methodology](docs/BENCHMARK_METHODOLOGY.md) and [Strategy Evaluat
 
 ## Documentation
 
+- [Product Architecture](docs/PRODUCT_ARCHITECTURE.md)
+- [Risk Taxonomy](docs/RISK_TAXONOMY.md)
 - [Policy Studio](docs/POLICY_STUDIO.md)
 - [Strategy Lifecycle](docs/STRATEGY_LIFECYCLE.md)
 - [Decision Trace](docs/DECISION_TRACE.md)
 - [Advertiser Integrity](docs/ADVERTISER_INTEGRITY.md)
-- [Benchmark Methodology](docs/BENCHMARK_METHODOLOGY.md) — development set vs held-out generalization
-- [External Validation (UW ad perceptions)](docs/EXTERNAL_VALIDATION_UW.md)
-- [Strategy Evaluation](docs/STRATEGY_EVALUATION.md)
-- [Data Scope and Truth Boundaries](docs/DATA_SCOPE_AND_TRUTH_BOUNDARIES.md)
-- [Production Governance](docs/PRODUCTION_GOVERNANCE.md)
-- [Public Evidence Register](docs/PUBLIC_EVIDENCE_REGISTER.md)
-- [Product Upgrade Changelog](docs/CHANGELOG_PRODUCT_UPGRADE.md)
 - [Risk Scoring Methodology](docs/RISK_SCORING_METHODOLOGY.md)
+- [Benchmark Methodology](docs/BENCHMARK_METHODOLOGY.md) — development set vs held-out generalization
+- [Strategy Evaluation](docs/STRATEGY_EVALUATION.md)
 - [Metric Dictionary](docs/METRIC_DICTIONARY.md)
+- [Data Scope and Truth Boundaries](docs/DATA_SCOPE_AND_TRUTH_BOUNDARIES.md)
+- [External Validation (UW ad perceptions)](docs/EXTERNAL_VALIDATION_UW.md)
+- [Public Evidence Register](docs/PUBLIC_EVIDENCE_REGISTER.md)
+- [Real Ads Enrichment (Meta connector)](docs/REAL_ADS_ENRICHMENT.md)
+- [Production Governance](docs/PRODUCTION_GOVERNANCE.md)
 
 ## Responsible use
 
