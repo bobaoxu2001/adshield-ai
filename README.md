@@ -148,7 +148,9 @@ The repository contains 60 isolated curated scenarios: 15 English, 15 Mandarin, 
 
 The frozen v1 benchmark remains 60% category, 66.7% routing, and 30% exception routing. Shadow v2.1, evaluated against the same labels, reaches 93.3%, 100%, and 100%.
 
-**These 60 scenarios are a development set, not a test set.** Candidate v2.1's category-precedence and routing rules were written while remediating these specific failures, so its agreement is *regression coverage over known defects* — not evidence that it generalizes to unseen ads. No held-out set exists yet; building one (authored after v2.1 was frozen) is the first prerequisite for any generalization claim. The external evidence registry adds real ads and independent perception labels, while Launch Readiness correctly remains **HOLD** because those labels are not authorized platform enforcement truth and organization-verified identity, reviewer SLA history, and policy approval are still absent.
+**These 60 scenarios are a development set, not a test set.** Candidate v2.1's category-precedence and routing rules were written while remediating these specific failures, so its agreement is *regression coverage over known defects* — not evidence that it generalizes to unseen ads. To measure that gap honestly, an 18-scenario **held-out set** authored *after* v2.1 was frozen (Benchmark Lab → Held-out generalization, `/api/holdout-benchmark`) shows v2.1 dropping from 93.3% / 100% to **50.0% / 72.2%** category / routing — still ahead of v1 (27.8% / 55.6%), but far below the tuned score. Launch Readiness correctly remains **HOLD** because the external labels are not authorized platform enforcement truth and organization-verified identity, reviewer SLA history, and policy approval are still absent.
+
+The [UW ad-perception dataset](docs/EXTERNAL_VALIDATION_UW.md) is used at its real evidentiary level: the ads are image screenshots with no text, so the engine cannot score them; instead, category-level analysis shows independent human deception perception concentrates in exactly the health and deceptive-claim areas the taxonomy prioritizes — external corroboration of the risk ranking, not per-ad agreement.
 
 Rule-vs-LLM comparison reports category, evidence, routing, unsupported-evidence heuristic, latency, failure, and cost availability. Without an authorized call, every LLM metric remains empty rather than fabricated.
 
@@ -160,7 +162,8 @@ See [Benchmark Methodology](docs/BENCHMARK_METHODOLOGY.md) and [Strategy Evaluat
 - [Strategy Lifecycle](docs/STRATEGY_LIFECYCLE.md)
 - [Decision Trace](docs/DECISION_TRACE.md)
 - [Advertiser Integrity](docs/ADVERTISER_INTEGRITY.md)
-- [Benchmark Methodology](docs/BENCHMARK_METHODOLOGY.md)
+- [Benchmark Methodology](docs/BENCHMARK_METHODOLOGY.md) — development set vs held-out generalization
+- [External Validation (UW ad perceptions)](docs/EXTERNAL_VALIDATION_UW.md)
 - [Strategy Evaluation](docs/STRATEGY_EVALUATION.md)
 - [Data Scope and Truth Boundaries](docs/DATA_SCOPE_AND_TRUTH_BOUNDARIES.md)
 - [Production Governance](docs/PRODUCTION_GOVERNANCE.md)

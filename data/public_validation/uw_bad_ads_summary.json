@@ -5,7 +5,7 @@
   "repository": "https://github.com/eric-zeng/chi-bad-ads-data",
   "source_commit": "9dd424e1ed4ec6a781d25f0d4a3ba97fbe3c3e40",
   "source_sha256": "1de5f862d3c1225286b9215f695ca000fce1ba7c170ebc9a2978b1e6524f8353",
-  "retrieved_at": "2026-07-16T07:38:59.839891+00:00",
+  "retrieved_at": "2026-07-24T07:25:09.150173+00:00",
   "data_scope": "external_independent_validation",
   "integration_status": "aggregate_evidence_loaded",
   "ad_records": 500,
@@ -105,6 +105,218 @@
       "ad_count": 28
     }
   ],
+  "perception_by_content_category": [
+    {
+      "content_category": "Listicle",
+      "ad_count": 29,
+      "mean_deceptive_share": 0.3395,
+      "mean_clickbait_share": 0.6981,
+      "mean_manipulative_share": 0.1555,
+      "ads_majority_deceptive": 7,
+      "ads_majority_clickbait": 26,
+      "mapped_risk_category": "Deceptive / Misleading Claims"
+    },
+    {
+      "content_category": "Health and Supplements",
+      "ad_count": 29,
+      "mean_deceptive_share": 0.4455,
+      "mean_clickbait_share": 0.5727,
+      "mean_manipulative_share": 0.1803,
+      "ads_majority_deceptive": 15,
+      "ads_majority_clickbait": 21,
+      "mapped_risk_category": "Health / Weight Loss / Pharmaceuticals Risk"
+    },
+    {
+      "content_category": "Advertorial",
+      "ad_count": 42,
+      "mean_deceptive_share": 0.3836,
+      "mean_clickbait_share": 0.5538,
+      "mean_manipulative_share": 0.1628,
+      "ads_majority_deceptive": 16,
+      "ads_majority_clickbait": 31,
+      "mapped_risk_category": "Deceptive / Misleading Claims"
+    },
+    {
+      "content_category": "Native",
+      "ad_count": 90,
+      "mean_deceptive_share": 0.3416,
+      "mean_clickbait_share": 0.5713,
+      "mean_manipulative_share": 0.161,
+      "ads_majority_deceptive": 24,
+      "ads_majority_clickbait": 64,
+      "mapped_risk_category": "Deceptive / Misleading Claims"
+    },
+    {
+      "content_category": "Software Download",
+      "ad_count": 24,
+      "mean_deceptive_share": 0.4155,
+      "mean_clickbait_share": 0.3348,
+      "mean_manipulative_share": 0.1375,
+      "ads_majority_deceptive": 10,
+      "ads_majority_clickbait": 7,
+      "mapped_risk_category": null
+    },
+    {
+      "content_category": "Sponsored Search",
+      "ad_count": 16,
+      "mean_deceptive_share": 0.2153,
+      "mean_clickbait_share": 0.3227,
+      "mean_manipulative_share": 0.1119,
+      "ads_majority_deceptive": 1,
+      "ads_majority_clickbait": 5,
+      "mapped_risk_category": "Deceptive / Misleading Claims"
+    },
+    {
+      "content_category": "Computer Security-related",
+      "ad_count": 15,
+      "mean_deceptive_share": 0.2664,
+      "mean_clickbait_share": 0.2309,
+      "mean_manipulative_share": 0.1365,
+      "ads_majority_deceptive": 3,
+      "ads_majority_clickbait": 3,
+      "mapped_risk_category": null
+    },
+    {
+      "content_category": "Google Responsive",
+      "ad_count": 104,
+      "mean_deceptive_share": 0.2361,
+      "mean_clickbait_share": 0.255,
+      "mean_manipulative_share": 0.0839,
+      "ads_majority_deceptive": 17,
+      "ads_majority_clickbait": 21,
+      "mapped_risk_category": null
+    },
+    {
+      "content_category": "COVID Products",
+      "ad_count": 18,
+      "mean_deceptive_share": 0.2202,
+      "mean_clickbait_share": 0.2475,
+      "mean_manipulative_share": 0.0611,
+      "ads_majority_deceptive": 2,
+      "ads_majority_clickbait": 4,
+      "mapped_risk_category": "Health / Weight Loss / Pharmaceuticals Risk"
+    },
+    {
+      "content_category": "Medical Services and Prescriptions",
+      "ad_count": 15,
+      "mean_deceptive_share": 0.1578,
+      "mean_clickbait_share": 0.1767,
+      "mean_manipulative_share": 0.1033,
+      "ads_majority_deceptive": 0,
+      "ads_majority_clickbait": 3,
+      "mapped_risk_category": "Health / Weight Loss / Pharmaceuticals Risk"
+    },
+    {
+      "content_category": "Sponsored Content",
+      "ad_count": 26,
+      "mean_deceptive_share": 0.1201,
+      "mean_clickbait_share": 0.1918,
+      "mean_manipulative_share": 0.0682,
+      "ads_majority_deceptive": 0,
+      "ads_majority_clickbait": 2,
+      "mapped_risk_category": "Deceptive / Misleading Claims"
+    },
+    {
+      "content_category": "Household Products",
+      "ad_count": 33,
+      "mean_deceptive_share": 0.0909,
+      "mean_clickbait_share": 0.2091,
+      "mean_manipulative_share": 0.0515,
+      "ads_majority_deceptive": 0,
+      "ads_majority_clickbait": 6,
+      "mapped_risk_category": null
+    },
+    {
+      "content_category": "Consumer Tech",
+      "ad_count": 25,
+      "mean_deceptive_share": 0.1216,
+      "mean_clickbait_share": 0.1715,
+      "mean_manipulative_share": 0.068,
+      "ads_majority_deceptive": 0,
+      "ads_majority_clickbait": 1,
+      "mapped_risk_category": null
+    },
+    {
+      "content_category": "Entertainment",
+      "ad_count": 29,
+      "mean_deceptive_share": 0.1166,
+      "mean_clickbait_share": 0.1498,
+      "mean_manipulative_share": 0.0737,
+      "ads_majority_deceptive": 1,
+      "ads_majority_clickbait": 4,
+      "mapped_risk_category": null
+    },
+    {
+      "content_category": "B2B Products",
+      "ad_count": 94,
+      "mean_deceptive_share": 0.1143,
+      "mean_clickbait_share": 0.139,
+      "mean_manipulative_share": 0.0502,
+      "ads_majority_deceptive": 2,
+      "ads_majority_clickbait": 2,
+      "mapped_risk_category": null
+    },
+    {
+      "content_category": "Image",
+      "ad_count": 278,
+      "mean_deceptive_share": 0.1167,
+      "mean_clickbait_share": 0.1336,
+      "mean_manipulative_share": 0.0758,
+      "ads_majority_deceptive": 15,
+      "ads_majority_clickbait": 16,
+      "mapped_risk_category": null
+    },
+    {
+      "content_category": "Apparel",
+      "ad_count": 28,
+      "mean_deceptive_share": 0.0929,
+      "mean_clickbait_share": 0.125,
+      "mean_manipulative_share": 0.0429,
+      "ads_majority_deceptive": 0,
+      "ads_majority_clickbait": 1,
+      "mapped_risk_category": null
+    },
+    {
+      "content_category": "Self-Link",
+      "ad_count": 56,
+      "mean_deceptive_share": 0.0738,
+      "mean_clickbait_share": 0.0931,
+      "mean_manipulative_share": 0.0665,
+      "ads_majority_deceptive": 1,
+      "ads_majority_clickbait": 1,
+      "mapped_risk_category": null
+    },
+    {
+      "content_category": "Journalism",
+      "ad_count": 29,
+      "mean_deceptive_share": 0.0697,
+      "mean_clickbait_share": 0.0885,
+      "mean_manipulative_share": 0.0735,
+      "ads_majority_deceptive": 0,
+      "ads_majority_clickbait": 0,
+      "mapped_risk_category": null
+    }
+  ],
+  "taxonomy_alignment": {
+    "method": "The UW ads are image screenshots with no ad copy, so the deterministic text engine cannot score them. Instead, each content category with at least 15 ads is ranked by mean independent-annotator deception and clickbait share, and compared with the risk categories this project prioritizes.",
+    "top_perceived_deception_categories": [
+      "Listicle",
+      "Health and Supplements",
+      "Advertorial",
+      "Native",
+      "Software Download"
+    ],
+    "lowest_perceived_deception_categories": [
+      "Apparel",
+      "Self-Link",
+      "Journalism"
+    ],
+    "risk_relevant_mapped_categories": [
+      "Deceptive / Misleading Claims",
+      "Health / Weight Loss / Pharmaceuticals Risk"
+    ],
+    "readout": "Independent human perception concentrates in Health/Supplements and in advertorial, listicle, and native formats — the same areas the taxonomy prioritizes as health and deceptive-claim risk. Low-perceived-deception categories (journalism, apparel, B2B) are not prioritized. This corroborates the taxonomy's risk ranking at the category level; it is not per-ad enforcement agreement and confers no promotion eligibility."
+  },
   "truth_boundary": "Independent participant opinions about real web ads; not platform enforcement decisions, policy-violation ground truth, TikTok ads, or production precision/recall evidence.",
   "redistribution_boundary": "Only derived aggregate statistics are tracked here. Ad images, participant comments, participant context, and row-level labels remain at the cited source.",
   "license_note": "The public research repository requests citation but exposes no separate license file at the pinned commit; this project therefore avoids redistributing source media or raw responses.",

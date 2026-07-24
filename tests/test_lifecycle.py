@@ -133,3 +133,28 @@ def test_dialog_accessibility_contract_remains_present() -> None:
     assert 'event.key === "Escape"' in source
     assert 'event.key !== "Tab"' in source
     assert 'window.scrollTo({ top: 0' in source
+
+
+def test_holdout_set_is_disjoint_from_curated_and_bounded() -> None:
+    from src.risk.lifecycle import HOLDOUT_BENCHMARK_CASES, run_benchmark, CANDIDATE_STRATEGY
+    held_ids = {row["scenario_id"] for row in HOLDOUT_BENCHMARK_CASES}
+    curated_ids = {row["scenario_id"] for row in CURATED_BENCHMARK_CASES}
+    assert len(HOLDOUT_BENCHMARK_CASES) == 18
+    assert held_ids.isdisjoint(curated_ids)
+    assert all(row["data_scope"] == "curated_benchmark" for row in HOLDOUT_BENCHMARK_CASES)
+    result = run_benchmark(CANDIDATE_STRATEGY, cases=HOLDOUT_BENCHMARK_CASES)
+    assert 0 <= result["category_agreement"] <= 1
+    assert 0 <= result["routing_agreement"] <= 1
+
+
+def test_holdout_shows_a_generalization_gap() -> None:
+    """The held-out set must estimate generalization: v2.1 should trail its dev-set score
+    yet still not underperform v1 on unseen scenarios."""
+    from src.app.repository import holdout_benchmark
+    report = holdout_benchmark()
+    dev = report["development_set"]["candidate_v2_1"]["category_agreement"]
+    held = report["holdout_set"]["candidate_v2_1"]["category_agreement"]
+    v1_held = report["holdout_set"]["v1"]["category_agreement"]
+    assert held < dev, "held-out agreement should be below the tuned development-set score"
+    assert held >= v1_held, "candidate should not generalize worse than the frozen baseline"
+    assert report["generalization_gap"]["category_agreement"] > 0

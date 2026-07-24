@@ -22,6 +22,7 @@ from src.risk.governance import Actor, PromotionEvidence, promotion_readiness, r
 from src.risk.lifecycle import (
     CANDIDATE_STRATEGY,
     CURRENT_STRATEGY,
+    HOLDOUT_BENCHMARK_CASES,
     POLICY_PACKS,
     RISK_EXCEPTIONS,
     RISK_SIGNALS,
@@ -277,6 +278,57 @@ def benchmark_lab(include_results: bool = False) -> dict[str, object]:
 
 def multimodal_text_evaluation(creative_text: str, ocr_text: str | None = None, asr_text: str | None = None) -> dict[str, object]:
     return extract_multimodal_text_evidence(creative_text, ocr_text=ocr_text, asr_text=asr_text)
+
+
+def holdout_benchmark() -> dict[str, object]:
+    """Generalization estimate on a held-out set authored after v2.1 was frozen.
+
+    The 60 curated scenarios are the development set v2.1 was tuned against; this set was
+    not, so it estimates generalization rather than regression coverage. Numbers here are
+    expected to be materially lower than the development-set gate — that gap is the point.
+    """
+    dev_v1 = run_benchmark(CURRENT_STRATEGY)
+    dev_v21 = run_benchmark(CANDIDATE_STRATEGY)
+    hold_v1 = run_benchmark(CURRENT_STRATEGY, cases=HOLDOUT_BENCHMARK_CASES)
+    hold_v21 = run_benchmark(CANDIDATE_STRATEGY, cases=HOLDOUT_BENCHMARK_CASES)
+
+    def summarize(result: dict[str, object]) -> dict[str, object]:
+        return {
+            "scenario_count": result["scenario_count"],
+            "category_agreement": result["category_agreement"],
+            "routing_agreement": result["routing_agreement"],
+        }
+
+    misses = [
+        {
+            "scenario_id": row["scenario_id"],
+            "expected_category": row["expected_category"],
+            "observed_category": row["evaluation"]["category"],
+            "expected_routing": row["expected_routing"],
+            "observed_routing": row["evaluation"]["recommended_action"],
+            "category_agreement": row["category_agreement"],
+            "routing_agreement": row["routing_agreement"],
+        }
+        for row in hold_v21["results"]
+        if not row["category_agreement"] or not row["routing_agreement"]
+    ]
+    return {
+        "data_scope": "holdout_generalization",
+        "label": "Held-out scenarios authored after v2.1 was frozen; estimates generalization, not regression coverage.",
+        "development_set": {"v1": summarize(dev_v1), "candidate_v2_1": summarize(dev_v21)},
+        "holdout_set": {"v1": summarize(hold_v1), "candidate_v2_1": summarize(hold_v21)},
+        "generalization_gap": {
+            "category_agreement": round(float(dev_v21["category_agreement"]) - float(hold_v21["category_agreement"]), 3),
+            "routing_agreement": round(float(dev_v21["routing_agreement"]) - float(hold_v21["routing_agreement"]), 3),
+        },
+        "readout": (
+            "Candidate v2.1 still beats v1 on unseen scenarios, but agreement drops sharply from the "
+            "development set. The gap is the honest cost of tuning rules against a fixed label set: most "
+            "held-out misses are novel phrasings, slang, and non-keyword synonyms the deterministic "
+            "matcher has no term for, which fall back to the default category."
+        ),
+        "holdout_misses": misses,
+    }
 
 
 def launch_readiness() -> dict[str, object]:

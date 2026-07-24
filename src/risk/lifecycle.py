@@ -365,6 +365,46 @@ def benchmark_cases() -> list[dict[str, object]]:
 CURATED_BENCHMARK_CASES = benchmark_cases()
 
 
+def holdout_benchmark_cases() -> list[dict[str, object]]:
+    """A held-out evaluation set authored AFTER candidate v2.1 was frozen.
+
+    Unlike the 60 curated scenarios, these were never inspected while writing v2.1's
+    category-precedence or routing rules, so agreement here estimates generalization
+    rather than regression coverage. They deliberately include realistic surface forms
+    the keyword engine is expected to miss (novel synonyms, slang, non-keyword phrasings)
+    so the generalization gap is visible rather than hidden. The author is the same person,
+    which remains a limitation shared with the curated set.
+    """
+    rows: list[dict[str, object]] = []
+    # (text, expected_category, expected_routing, language, market, vertical)
+    specs = [
+        ("Approval guaranteed, no credit check payday advance", "Financial Scam / High-Risk Financial Services", "soft reject", "en", "US", "financial_services"),
+        ("Turn 100 dollars into 10000 with our crypto signals", "Financial Scam / High-Risk Financial Services", "escalate", "en", "US", "financial_services"),
+        ("Melt belly fat overnight with this natural pill", "Health / Weight Loss / Pharmaceuticals Risk", "escalate", "en", "US", "health"),
+        ("FDA-cleared device, results in one week guaranteed", "Health / Weight Loss / Pharmaceuticals Risk", "escalate", "en", "US", "health"),
+        ("Chat with me on Telegram for exclusive stock tips", "Off-Platform Diversion", "escalate", "en", "US", "financial_services"),
+        ("Authentic-style designer handbags at 90 percent off", "Counterfeit / IP Infringement", "escalate", "en", "US", "retail"),
+        ("Educational awareness workshop: how to spot guaranteed-return scams", "Deceptive / Misleading Claims", "allow", "en", "US", "financial_services"),
+        ("FDIC insured savings account, principal protected", "Financial Scam / High-Risk Financial Services", "allow", "en", "US", "financial_services"),
+        ("Buy an untraceable firearm with no background check", "Dangerous Products or Services", "hard reject", "en", "US", "mixed"),
+        ("Custom-made fake identity documents, discreet delivery", "Advertiser Integrity Risk", "escalate", "en", "US", "mixed"),
+        ("零门槛下款，当天放款不查征信", "Financial Scam / High-Risk Financial Services", "soft reject", "zh", "CN", "financial_services"),
+        ("稳赚不赔的期货带单群", "Deceptive / Misleading Claims", "soft reject", "zh", "CN", "financial_services"),
+        ("三天见效的祖传减肥秘方", "Health / Weight Loss / Pharmaceuticals Risk", "escalate", "zh", "CN", "health"),
+        ("加我飞机领取平台福利", "Off-Platform Diversion", "escalate", "zh", "CN", "mixed"),
+        ("老虎机注册就送彩金", "Gambling / Gaming Risk", "escalate", "zh", "CN", "mixed"),
+        ("bao ben li cai gao shou dai dan", "Financial Scam / High-Risk Financial Services", "soft reject", "mixed", "SG", "financial_services"),
+        ("7天见效 miracle results", "Health / Weight Loss / Pharmaceuticals Risk", "soft reject", "mixed", "SG", "health"),
+        ("wen zhuan bu pei, jia telegram now", "Off-Platform Diversion", "escalate", "mixed", "SG", "mixed"),
+    ]
+    for index, (text, category, routing, language, market, vertical) in enumerate(specs, 1):
+        rows.append(_scenario(f"HELD-{index:02d}", language, market, vertical, text, category, [], routing, "high"))
+    return rows
+
+
+HOLDOUT_BENCHMARK_CASES = holdout_benchmark_cases()
+
+
 def run_benchmark(strategy: StrategyVersion = CURRENT_STRATEGY, cases: Iterable[dict[str, object]] | None = None) -> dict[str, object]:
     rows = list(cases or CURATED_BENCHMARK_CASES)
     results = []

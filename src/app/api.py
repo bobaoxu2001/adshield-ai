@@ -126,6 +126,11 @@ def get_benchmark_lab(include_results: bool = False) -> dict[str, object]:
     return repository.benchmark_lab(include_results=include_results)
 
 
+@app.get("/api/holdout-benchmark")
+def get_holdout_benchmark() -> dict[str, object]:
+    return repository.holdout_benchmark()
+
+
 @app.get("/api/launch-readiness")
 def get_launch_readiness() -> dict[str, object]:
     return repository.launch_readiness()
