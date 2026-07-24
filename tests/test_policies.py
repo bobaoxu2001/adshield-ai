@@ -11,7 +11,27 @@ def test_policy_knowledge_base_has_sources() -> None:
 def test_retrieval_returns_category_rule() -> None:
     rules = retrieve_policy_rules("Financial Scam / High-Risk Financial Services")
     assert rules
-    assert rules[0].rule_id == "TT-FIN-001"
+    assert all(rule.category == "Financial Scam / High-Risk Financial Services" for rule in rules)
+    # The corpus is multi-platform: the financial category is backed by more than one publisher.
+    assert len({rule.source_name for rule in rules}) >= 2
+
+
+def test_corpus_is_platform_neutral() -> None:
+    """No single publisher should dominate the policy knowledge base."""
+    rules = load_policy_rules()
+    publishers = {"tiktok": 0, "meta": 0, "google": 0, "ftc": 0}
+    for rule in rules:
+        url = rule.source_url.lower()
+        if "tiktok" in url:
+            publishers["tiktok"] += 1
+        elif "meta.com" in url or "facebook" in url:
+            publishers["meta"] += 1
+        elif "google" in url:
+            publishers["google"] += 1
+        elif "ftc.gov" in url:
+            publishers["ftc"] += 1
+    # At least three distinct major publishers are represented.
+    assert sum(count > 0 for count in publishers.values()) >= 3
 
 
 def test_retrieval_returns_source_linked_rules() -> None:

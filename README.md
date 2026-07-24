@@ -107,7 +107,7 @@ The deployed demo uses a tracked, read-only DuckDB snapshot. Local runs persist 
 | [UW CHI 2021 Ad Perceptions](https://badads.cs.washington.edu/datasets.html) | Aggregate external validation from real web ads and independent opinions | 500 ads / 1,025 annotators / 5,104 ratings loaded |
 | [Meta Ad Library API](https://www.facebook.com/ads/library/api/) | Authorized public ad creatives | Optional; explicit empty state without token |
 | [TikTok Commercial Content API](https://developers.tiktok.com/products/commercial-content-api/) | Approved public ad and advertiser metadata | Connector ready; approval token required |
-| Public advertising and consumer-protection guidance | Short source-linked policy summaries | Loaded |
+| Public ad-policy guidance (Google Ads, Meta Advertising Standards, TikTok, FTC) | Short source-linked policy summaries, mapped per risk category | 25 rules; each core category grounds in multiple platforms |
 
 Raw retrievals are timestamped locally; normalized data and the writable mart are reproducible and Git-ignored. The deployment snapshot contains only the public fields required by the read-only product.
 
