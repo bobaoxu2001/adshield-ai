@@ -4,7 +4,6 @@ from pathlib import Path
 from src.risk.scoring import score_case
 from src.risk.taxonomy import CATEGORY_NAMES, MANDARIN_TERMS
 
-
 FIXTURES = json.loads((Path(__file__).parent / "fixtures" / "synthetic_cases.json").read_text())
 
 VALID_ACTIONS = {"approve", "soft reject", "hard reject", "escalate to human review"}

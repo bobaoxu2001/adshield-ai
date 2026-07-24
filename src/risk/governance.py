@@ -1,9 +1,8 @@
 from __future__ import annotations
 
+from collections.abc import Iterable
 from dataclasses import dataclass, field, replace
 from datetime import UTC, datetime, timedelta
-from typing import Iterable
-
 
 ROLE_PERMISSIONS = {
     "reviewer": frozenset({"review.submit"}),

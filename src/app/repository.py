@@ -3,12 +3,11 @@ from __future__ import annotations
 import json
 import math
 import re
-import statistics
 import time
 import uuid
 from collections import Counter
-from itertools import combinations
 from datetime import UTC, datetime
+from itertools import combinations
 
 import duckdb
 
@@ -16,8 +15,7 @@ from src.analytics.evaluate import evaluation_metrics
 from src.analytics.metric_diagnosis import metric_diagnosis
 from src.config import settings
 from src.risk.comparison import rule_vs_llm_comparison
-from src.risk.evidence_extractor import extract_evidence
-from src.risk.evidence_extractor import CURATED_HOMOPHONE_VARIANTS, extract_multimodal_text_evidence
+from src.risk.evidence_extractor import CURATED_HOMOPHONE_VARIANTS, extract_evidence, extract_multimodal_text_evidence
 from src.risk.governance import Actor, PromotionEvidence, promotion_readiness, require_permission
 from src.risk.lifecycle import (
     CANDIDATE_STRATEGY,
@@ -30,15 +28,14 @@ from src.risk.lifecycle import (
     STRATEGIES,
     curated_advertiser_profiles,
     decision_trace,
-    evaluate_text,
     preview_candidate_strategy,
     run_benchmark,
     strategy_evaluation,
 )
-from src.risk.taxonomy import MANDARIN_TERMS
 from src.risk.policy_retriever import retrieve_policy_rules
 from src.risk.public_evidence import public_evidence_registry
 from src.risk.scoring import score_case
+from src.risk.taxonomy import MANDARIN_TERMS
 
 VALID_DECISIONS = frozenset({
     "approve", "reject", "escalate", "wrong category", "false positive", "false negative",

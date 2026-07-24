@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from collections import Counter
 
+
 def calculate_feature_lift(scores: list[dict[str, object]]) -> list[dict[str, object]]:
     if not scores:
         return []

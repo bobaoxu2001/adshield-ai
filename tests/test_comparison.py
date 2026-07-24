@@ -1,5 +1,5 @@
-from src.risk.comparison import rule_vs_llm_comparison
 from src.risk import comparison
+from src.risk.comparison import rule_vs_llm_comparison
 
 
 def test_comparison_is_deterministic_default_without_key() -> None:

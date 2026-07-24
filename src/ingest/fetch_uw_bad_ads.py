@@ -4,7 +4,6 @@ import hashlib
 import json
 from collections import Counter
 from datetime import UTC, datetime
-from pathlib import Path
 
 import requests
 

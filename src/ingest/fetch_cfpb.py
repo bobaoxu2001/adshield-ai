@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import csv
 import io
+from collections.abc import Iterable
 from datetime import UTC, datetime
-from typing import Iterable
 from urllib.parse import urlencode
 
 import requests

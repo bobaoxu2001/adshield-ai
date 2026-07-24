@@ -1,5 +1,5 @@
-from src.risk.taxonomy import CATEGORY_NAMES
 from src.risk.scoring import score_case
+from src.risk.taxonomy import CATEGORY_NAMES
 
 
 def test_required_score_contract() -> None:

@@ -2,7 +2,13 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 
-from src.risk.evidence_extractor import V1_TAXONOMY_TERMS, contains_term, detect_language, extract_evidence, landing_page_mismatch
+from src.risk.evidence_extractor import (
+    V1_TAXONOMY_TERMS,
+    contains_term,
+    detect_language,
+    extract_evidence,
+    landing_page_mismatch,
+)
 from src.risk.policy_retriever import retrieve_policy_rules
 from src.risk.taxonomy import CATEGORIES, category_for_product
 

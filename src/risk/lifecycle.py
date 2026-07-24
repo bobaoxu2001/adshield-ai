@@ -1,12 +1,10 @@
 from __future__ import annotations
 
 import json
-import math
-import statistics
 import time
+from collections.abc import Iterable
 from dataclasses import dataclass, replace
 from datetime import UTC, datetime
-from typing import Iterable
 
 from src.risk.evidence_extractor import contains_term, detect_language, extract_evidence
 from src.risk.scoring import score_case
@@ -226,7 +224,6 @@ def evaluate_text(case_id: str, text: str, *, product: str = "commercial adverti
         exceptions = raw_exceptions
     reduction = sum(float(item["applied_reduction"]) for item in exceptions) * strategy.exception_multiplier
     adjusted_score = max(0.0, round(baseline.risk_score - reduction, 3))
-    requires_review = any(bool(item["requires_human_review"]) for item in exceptions)
     if strategy.authoritative:
         action = {"approve": "allow", "escalate to human review": "escalate"}.get(baseline.recommended_action, baseline.recommended_action)
         human_review = baseline.needs_human_review
@@ -317,7 +314,8 @@ def benchmark_cases() -> list[dict[str, object]]:
         ("Limited time payday loan, act now", "Financial Scam / High-Risk Financial Services", ["payday", "act now"], "escalate"),
         ("Document falsification service for new accounts", "Advertiser Integrity Risk", ["document falsification"], "hard reject"),
     ]
-    for index, item in enumerate(en, 1): rows.append(_scenario(f"BEN-EN-{index:02d}", "en", "US", "mixed", item[0], item[1], item[2], item[3]))
+    for index, item in enumerate(en, 1):
+        rows.append(_scenario(f"BEN-EN-{index:02d}", "en", "US", "mixed", item[0], item[1], item[2], item[3]))
     zh = [
         ("无视征信，黑户可贷，当天秒批", "Financial Scam / High-Risk Financial Services", ["无视征信", "黑户可贷", "秒批"], "soft reject"),
         ("稳赚项目，承诺保本返利", "Financial Scam / High-Risk Financial Services", ["稳赚", "保本", "返利"], "soft reject"),
@@ -335,7 +333,8 @@ def benchmark_cases() -> list[dict[str, object]]:
         ("无风险投资群，马上加入", "Deceptive / Misleading Claims", ["investment"], "escalate"),
         ("私域贷款秒批，无需资料", "Financial Scam / High-Risk Financial Services", ["私域", "秒批"], "soft reject"),
     ]
-    for index, item in enumerate(zh, 1): rows.append(_scenario(f"BEN-ZH-{index:02d}", "zh", "CN", "mixed", item[0], item[1], item[2], item[3]))
+    for index, item in enumerate(zh, 1):
+        rows.append(_scenario(f"BEN-ZH-{index:02d}", "zh", "CN", "mixed", item[0], item[1], item[2], item[3]))
     evasions = [
         ("wen zhuan crypto plan", "Deceptive / Misleading Claims", ["稳赚"]), ("bao ben investment", "Financial Scam / High-Risk Financial Services", ["保本"]),
         ("miao pi loan today", "Financial Scam / High-Risk Financial Services", ["秒批"]), ("加·微了解详情", "Off-Platform Diversion", ["加微"]),
@@ -343,7 +342,8 @@ def benchmark_cases() -> list[dict[str, object]]:
         ("hei hu ke dai", "Financial Scam / High-Risk Financial Services", ["黑户可贷"]), ("si yu deal on telegram", "Off-Platform Diversion", ["私域", "telegram"]),
         ("返-利 investment club", "Financial Scam / High-Risk Financial Services", ["返利"]), ("jia wei for loan 秒批", "Financial Scam / High-Risk Financial Services", ["加微", "秒批"]),
     ]
-    for index, item in enumerate(evasions, 1): rows.append(_scenario(f"BEN-EVA-{index:02d}", "mixed", "SG", "mixed", item[0], item[1], item[2], "escalate", "high"))
+    for index, item in enumerate(evasions, 1):
+        rows.append(_scenario(f"BEN-EVA-{index:02d}", "mixed", "SG", "mixed", item[0], item[1], item[2], "escalate", "high"))
     exception_rows = [
         ("FDIC-insured deposit guarantee information", "Financial Scam / High-Risk Financial Services", "EXC-FDIC"),
         ("Drug prevention law educational seminar", "Dangerous Products or Services", "EXC-EDUCATION"),
@@ -356,7 +356,8 @@ def benchmark_cases() -> list[dict[str, object]]:
         ("报道引用七天瘦虚假宣传案例", "Health / Weight Loss / Pharmaceuticals Risk", "EXC-QUOTE"),
         ("Deposit insurance education: principal protection limits", "Financial Scam / High-Risk Financial Services", "EXC-FDIC"),
     ]
-    for index, item in enumerate(exception_rows, 1): rows.append(_scenario(f"BEN-EXC-{index:02d}", "mixed" if index > 5 else "en", "US", "financial_services" if item[2] == "EXC-FDIC" else "mixed", item[0], item[1], [], "escalate" if item[1] == "Dangerous Products or Services" else "allow", "high", exception=item[2]))
+    for index, item in enumerate(exception_rows, 1):
+        rows.append(_scenario(f"BEN-EXC-{index:02d}", "mixed" if index > 5 else "en", "US", "financial_services" if item[2] == "EXC-FDIC" else "mixed", item[0], item[1], [], "escalate" if item[1] == "Dangerous Products or Services" else "allow", "high", exception=item[2]))
     behavior = [
         ("Repeated loan creatives with rotating WhatsApp contacts", "financial_services"), ("Three near-identical miracle cure creatives", "health"),
         ("New advertiser cycling destination domains", "mixed"), ("Multiple creatives reuse the same off-platform contact", "mixed"),
@@ -364,7 +365,8 @@ def benchmark_cases() -> list[dict[str, object]]:
         ("New advertiser with rapid creative velocity", "mixed"), ("Campaign cluster repeats 保本 and 秒批", "financial_services"),
         ("Prior benchmark reversals suggest high false-positive exposure", "mixed"), ("Linked scenario creatives share landing-page mismatch", "mixed"),
     ]
-    for index, item in enumerate(behavior, 1): rows.append(_scenario(f"BEN-ADV-{index:02d}", "mixed", "GB", item[1], item[0], "Advertiser Integrity Risk", ["repeated_pattern"], "escalate", "high", advertiser=f"CURATED-ADV-{(index - 1) // 2 + 1:02d}", structured_evidence=[{"type": "advertiser_behavior_signal", "term": "repeated_pattern", "category": "Advertiser Integrity Risk", "excerpt": "benchmark-only structured advertiser context"}]))
+    for index, item in enumerate(behavior, 1):
+        rows.append(_scenario(f"BEN-ADV-{index:02d}", "mixed", "GB", item[1], item[0], "Advertiser Integrity Risk", ["repeated_pattern"], "escalate", "high", advertiser=f"CURATED-ADV-{(index - 1) // 2 + 1:02d}", structured_evidence=[{"type": "advertiser_behavior_signal", "term": "repeated_pattern", "category": "Advertiser Integrity Risk", "excerpt": "benchmark-only structured advertiser context"}]))
     return rows
 
 
@@ -419,14 +421,12 @@ def run_benchmark(strategy: StrategyVersion = CURRENT_STRATEGY, cases: Iterable[
         evaluation = evaluate_text(str(case["scenario_id"]), str(case["creative_text"]), product=str(case.get("vertical") or "commercial advertisement"), source="Meta", strategy=strategy, landing_text=case.get("landing_page_text") and str(case["landing_page_text"]), data_scope=DATA_SCOPE_CURATED, structured_evidence=[] if strategy.authoritative else list(case.get("structured_evidence") or []))
         evidence_terms = {str(item.get("canonical_term") or item.get("term") or "").lower() for item in evaluation["matched_signals"]}
         expected_terms = {str(term).lower() for term in case["expected_evidence"]}
-        matched_exception_ids = {str(item["exception_id"]) for item in evaluation["matched_exceptions"]}
         exception_applied = any(item["exception_id"] == case["expected_exception"] and (float(item["applied_reduction"]) > 0 or bool(item["blocked_from_override"]) or item["exception_id"] == "EXC-WORD-BOUNDARY") for item in evaluation["matched_exceptions"]) if case["expected_exception"] else True
         results.append({"scenario_id": case["scenario_id"], "expected_category": case["expected_category"], "expected_routing": case["expected_routing"], "category_agreement": evaluation["category"] == case["expected_category"], "evidence_agreement": not expected_terms or expected_terms.issubset(evidence_terms), "routing_agreement": evaluation["recommended_action"] == case["expected_routing"], "exception_agreement": exception_applied, "mandarin_variant_covered": not str(case["scenario_id"]).startswith("BEN-EVA") or expected_terms.issubset(evidence_terms), "false_positive_agreement": not str(case["scenario_id"]).startswith("BEN-EXC") or evaluation["recommended_action"] == case["expected_routing"], "evaluation": evaluation})
     elapsed_ms = (time.perf_counter() - started) * 1000
     def rate(key: str, subset: list[dict[str, object]] | None = None) -> float:
         values = subset or results
         return round(sum(bool(row[key]) for row in values) / max(1, len(values)), 3)
-    evasion = [row for row in results if str(row["scenario_id"]).startswith("BEN-EVA")]
     exceptions = [row for row in results if str(row["scenario_id"]).startswith("BEN-EXC")]
     expected_term_count = sum(len(row["expected_evidence"]) for row in rows)
     matched_term_count = sum(len({str(term).lower() for term in case["expected_evidence"]} & {str(item.get("canonical_term") or item.get("term") or "").lower() for item in result["evaluation"]["matched_signals"]}) for case, result in zip(rows, results))

@@ -4,8 +4,8 @@ import pytest
 
 from src.risk.lifecycle import (
     CANDIDATE_STRATEGY,
-    CURRENT_STRATEGY,
     CURATED_BENCHMARK_CASES,
+    CURRENT_STRATEGY,
     create_candidate_version,
     curated_advertiser_profiles,
     decision_trace,
@@ -136,7 +136,7 @@ def test_dialog_accessibility_contract_remains_present() -> None:
 
 
 def test_holdout_set_is_disjoint_from_curated_and_bounded() -> None:
-    from src.risk.lifecycle import HOLDOUT_BENCHMARK_CASES, run_benchmark, CANDIDATE_STRATEGY
+    from src.risk.lifecycle import CANDIDATE_STRATEGY, HOLDOUT_BENCHMARK_CASES, run_benchmark
     held_ids = {row["scenario_id"] for row in HOLDOUT_BENCHMARK_CASES}
     curated_ids = {row["scenario_id"] for row in CURATED_BENCHMARK_CASES}
     assert len(HOLDOUT_BENCHMARK_CASES) == 18

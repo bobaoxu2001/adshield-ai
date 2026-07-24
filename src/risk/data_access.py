@@ -28,7 +28,7 @@ class AuthorizedAdRecord(BaseModel):
     advertiser_history: list[dict[str, object]] = Field(default_factory=list)
 
     @model_validator(mode="after")
-    def validate_label_provenance(self) -> "AuthorizedAdRecord":
+    def validate_label_provenance(self) -> AuthorizedAdRecord:
         if self.enforcement_label and not self.enforcement_label_source:
             raise ValueError("Every enforcement label requires an enforcement_label_source")
         if self.source_record_id.upper().startswith(("CURATED", "SYNTHETIC", "DEMO")):
@@ -41,7 +41,7 @@ class AuthorizedDataBatch(BaseModel):
     records: list[AuthorizedAdRecord] = Field(min_length=1)
 
     @model_validator(mode="after")
-    def validate_scope(self) -> "AuthorizedDataBatch":
+    def validate_scope(self) -> AuthorizedDataBatch:
         if self.authorization.expires_at <= datetime.now(self.authorization.expires_at.tzinfo):
             raise ValueError("Authorization is expired")
         required = {"source_record_id", "advertiser_id", "creative_text", "observed_at", "market", "language"}
