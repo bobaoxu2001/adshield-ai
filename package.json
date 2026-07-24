@@ -7,16 +7,20 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
-    "preview": "vite preview --host 127.0.0.1"
+    "preview": "vite preview --host 127.0.0.1",
+    "format": "prettier --write \"src/**/*.{jsx,js}\"",
+    "format:check": "prettier --check \"src/**/*.{jsx,js}\""
   },
   "dependencies": {
     "@fontsource-variable/inter": "5.2.8",
     "@phosphor-icons/react": "2.1.10",
     "@vitejs/plugin-react": "5.0.4",
-    "recharts": "2.15.4",
-    "vite": "6.4.2",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "recharts": "2.15.4",
+    "vite": "6.4.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "prettier": "3.9.6"
+  }
 }
