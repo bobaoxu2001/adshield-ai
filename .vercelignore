@@ -1,0 +1,16 @@
+.env
+.github
+.npm-cache
+.pytest_cache
+.venv
+.vercel
+.vercel_python_packages
+__pycache__
+data/processed
+data/raw
+dist
+docs
+node_modules
+notebooks
+tests
+*.duckdb.wal

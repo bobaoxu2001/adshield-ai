@@ -1,0 +1,35 @@
+name: Production evidence monitor
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-api-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Record production observation
+        run: |
+          python scripts/record_availability_probe.py \
+            --url https://adshield-ai-seven.vercel.app \
+            --output production-observation.json
+
+      - name: Upload evidence artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-observation-${{ github.run_id }}
+          path: production-observation.json
+          retention-days: 90

@@ -1,0 +1,112 @@
+{
+  "dataset_id": "uw-chi-2021-ad-perceptions",
+  "source_name": "UW CHI 2021 Ad Perceptions Dataset",
+  "source_page": "https://badads.cs.washington.edu/datasets.html",
+  "repository": "https://github.com/eric-zeng/chi-bad-ads-data",
+  "source_commit": "9dd424e1ed4ec6a781d25f0d4a3ba97fbe3c3e40",
+  "source_sha256": "1de5f862d3c1225286b9215f695ca000fce1ba7c170ebc9a2978b1e6524f8353",
+  "retrieved_at": "2026-07-16T07:38:59.839891+00:00",
+  "data_scope": "external_independent_validation",
+  "integration_status": "aggregate_evidence_loaded",
+  "ad_records": 500,
+  "reported_unique_annotators": 1025,
+  "rating_observations": 5104,
+  "annotators_per_ad": {
+    "minimum": 10,
+    "maximum": 13,
+    "mean": 10.208
+  },
+  "mean_overall_rating_1_to_7": 3.7373,
+  "opinion_label_summary": {
+    "deceptive": {
+      "mean_annotator_share": 0.1823,
+      "ads_with_any_label": 335,
+      "ads_with_majority_label": 56,
+      "majority_threshold": ">= 50% of an ad's annotators"
+    },
+    "clickbait": {
+      "mean_annotator_share": 0.2409,
+      "ads_with_any_label": 364,
+      "ads_with_majority_label": 103,
+      "majority_threshold": ">= 50% of an ad's annotators"
+    },
+    "manipulative": {
+      "mean_annotator_share": 0.0923,
+      "ads_with_any_label": 267,
+      "ads_with_majority_label": 7,
+      "majority_threshold": ">= 50% of an ad's annotators"
+    },
+    "trustworthy": {
+      "mean_annotator_share": 0.0979,
+      "ads_with_any_label": 268,
+      "ads_with_majority_label": 7,
+      "majority_threshold": ">= 50% of an ad's annotators"
+    },
+    "unclear": {
+      "mean_annotator_share": 0.1757,
+      "ads_with_any_label": 368,
+      "ads_with_majority_label": 38,
+      "majority_threshold": ">= 50% of an ad's annotators"
+    },
+    "distasteful": {
+      "mean_annotator_share": 0.0415,
+      "ads_with_any_label": 109,
+      "ads_with_majority_label": 8,
+      "majority_threshold": ">= 50% of an ad's annotators"
+    }
+  },
+  "top_content_labels": [
+    {
+      "label": "Image",
+      "ad_count": 278
+    },
+    {
+      "label": "Google Responsive",
+      "ad_count": 104
+    },
+    {
+      "label": "B2B Products",
+      "ad_count": 94
+    },
+    {
+      "label": "Native",
+      "ad_count": 90
+    },
+    {
+      "label": "Self-Link",
+      "ad_count": 56
+    },
+    {
+      "label": "Advertorial",
+      "ad_count": 42
+    },
+    {
+      "label": "Household Products",
+      "ad_count": 33
+    },
+    {
+      "label": "Journalism",
+      "ad_count": 29
+    },
+    {
+      "label": "Listicle",
+      "ad_count": 29
+    },
+    {
+      "label": "Entertainment",
+      "ad_count": 29
+    },
+    {
+      "label": "Health and Supplements",
+      "ad_count": 29
+    },
+    {
+      "label": "Apparel",
+      "ad_count": 28
+    }
+  ],
+  "truth_boundary": "Independent participant opinions about real web ads; not platform enforcement decisions, policy-violation ground truth, TikTok ads, or production precision/recall evidence.",
+  "redistribution_boundary": "Only derived aggregate statistics are tracked here. Ad images, participant comments, participant context, and row-level labels remain at the cited source.",
+  "license_note": "The public research repository requests citation but exposes no separate license file at the pinned commit; this project therefore avoids redistributing source media or raw responses.",
+  "promotion_gate_effect": "informative_only"
+}

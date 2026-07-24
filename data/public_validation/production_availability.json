@@ -1,0 +1,31 @@
+{
+  "measurement_scope": "external_api_reachability",
+  "observations": [
+    {
+      "checked_at": "2026-07-16T07:59:37Z",
+      "target": "https://adshield-ai-seven.vercel.app",
+      "passed": true,
+      "checks": [
+        {
+          "url": "https://adshield-ai-seven.vercel.app/api/health",
+          "http_status": 200,
+          "assertion": "status=ok and database_ready=true"
+        },
+        {
+          "url": "https://adshield-ai-seven.vercel.app/api/benchmark-lab",
+          "http_status": 200,
+          "assertion": "promotion_gate.status=eligible_for_review"
+        },
+        {
+          "url": "https://adshield-ai-seven.vercel.app/api/public-evidence",
+          "http_status": 200,
+          "assertion": "uw_summary.ad_records=500"
+        }
+      ],
+      "runner": "GitHub Actions ubuntu-latest",
+      "workflow_run": "https://github.com/bobaoxu2001/adshield-ai/actions/runs/29481824681",
+      "commit_sha": "c641297d3937fa2e273daacaece207d44520254d"
+    }
+  ],
+  "claim_boundary": "Public endpoint reachability; not reviewer decision SLA and not a contractual availability SLA."
+}

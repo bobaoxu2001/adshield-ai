@@ -1,0 +1,20 @@
+[
+  {
+    "case_id": "test-fin-001",
+    "text": "Guaranteed investment return. Add me on WeChat now.",
+    "product": "investment service",
+    "expected_category": "Deceptive / Misleading Claims"
+  },
+  {
+    "case_id": "test-zh-001",
+    "text": "无视征信，黑户可贷，秒批，加微了解。",
+    "product": "loan",
+    "expected_category": "Financial Scam / High-Risk Financial Services"
+  },
+  {
+    "case_id": "test-health-001",
+    "text": "七天瘦，神药根治，100% guaranteed.",
+    "product": "supplement",
+    "expected_category": "Health / Weight Loss / Pharmaceuticals Risk"
+  }
+]

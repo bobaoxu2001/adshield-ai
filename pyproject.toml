@@ -1,0 +1,23 @@
+[project]
+name = "adshield-ai"
+version = "1.0.0"
+requires-python = ">=3.11"
+dependencies = [
+  "duckdb==1.5.4",
+  "fastapi==0.139.0",
+  "pydantic==2.13.4",
+  "python-dotenv==1.2.2",
+  "openai==1.99.6",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.vercel.scripts]
+build = "npm run build"

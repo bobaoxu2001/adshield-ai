@@ -1,0 +1,5 @@
+duckdb==1.5.4
+fastapi==0.139.0
+pydantic==2.13.4
+python-dotenv==1.2.2
+openai==1.99.6
